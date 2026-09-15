@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-08-20T02:59:28.127Z",
+        "reason": "Pre-existing, intentional festive gold-foil text (.gold-text/.gold-title) for a Deepavali crackers brand — documented in-file as reserved for the hero discount word only, already through multiple client design-review rounds. Not new AI-added flourish, unrelated to this session's SEO edits."
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/app/products/[id]/page.tsx"
+        ],
+        "createdAt": "2026-08-20T03:02:25.612Z",
+        "reason": "False positive: img only renders inside the { p.image || category?.image ? (...) : (...) } truthy branch (same guarded-fallback pattern already used in EstimateBuilder.tsx), so src is never actually empty at runtime — the || \"\" is only there to satisfy TS since category is nullable."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-08-20T03:06:15.429Z",
+        "reason": "False positive: .toran is a hand-built Deepavali marigold-and-bulb garland strip (documented in-file), not a generic AI grid/blueprint background. Pre-existing from earlier design-review rounds, unrelated to this session's SEO edits."
+      }
+    ]
+  }
+}

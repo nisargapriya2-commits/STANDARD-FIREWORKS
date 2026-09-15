@@ -1,0 +1,84 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "app",
+	"main": ".open-next/worker.js",
+	"compatibility_date": "2026-07-17",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".open-next/assets"
+	},
+	"images": {
+		// Enable image optimization
+		// see https://opennext.js.org/cloudflare/howtos/image
+		"binding": "IMAGES"
+	},
+	"services": [
+		{
+			// Self-reference service binding, the service name must match the worker name
+			// see https://opennext.js.org/cloudflare/caching
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "app"
+		}
+	],
+	/**
+	 * Custom domain. The zone `standardfireworkssivakasi.com` is ACTIVE on Cloudflare
+	 * (nameservers janet/plato, moved off Hostinger) and sits in the same Cloudflare account as this
+	 * Worker — which is what `custom_domain` requires.
+	 *
+	 * On `npm run deploy` wrangler creates the DNS records and orders the TLS certificate
+	 * itself. Nothing to add by hand in the Cloudflare DNS tab.
+	 *
+	 * Safe to do: the zone has NO MX records (checked 2026-07-27), so there is no email on
+	 * this domain to break — the shop uses a Gmail address.
+	 *
+	 * www is served too; canonical tags point at the apex (layout.tsx `metadataBase`), so
+	 * Google still indexes one URL.
+	 */
+	"routes": [
+		{ "pattern": "standardfireworkssivakasi.com", "custom_domain": true },
+		{ "pattern": "www.standardfireworkssivakasi.com", "custom_domain": true }
+	],
+	// D1 database for orders / enquiries / admin.
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "sf-db",
+			"database_id": "e0d9c5fd-53a3-44b9-a4a2-bad23e73bbb2",
+			"migrations_dir": "migrations"
+		}
+	],
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true
+	/**
+	 * Smart Placement
+	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
+	 */
+	// "placement": {  "mode": "smart" }
+	/**
+	 * Bindings
+	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
+	 * databases, object storage, AI inference, real-time communication and more.
+	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/
+	 */
+	/**
+	 * Environment Variables
+	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
+	 * Note: Use secrets to store sensitive data.
+	 * https://developers.cloudflare.com/workers/configuration/secrets/
+	 */
+	// "vars": {  "MY_VARIABLE": "production_value" }
+}
