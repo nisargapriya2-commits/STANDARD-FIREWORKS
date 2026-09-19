@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PublicOnly from "@/components/PublicOnly";
 import WelcomePopup from "@/components/WelcomePopup";
+import MetaPixel from "@/components/MetaPixel";
 import { CartProvider } from "@/lib/cart";
 import { SITE, publicSite } from "@/lib/site";
 import { getSettings, getLogoUrl, getPriceListPdfMeta } from "@/lib/catalog";
@@ -118,6 +119,7 @@ export default async function RootLayout({
 				)}
 			</head>
 			<body className="flex min-h-screen flex-col antialiased">
+				<MetaPixel />
 				<JsonLd data={localBusinessJsonLd(site)} />
 				<JsonLd data={websiteJsonLd()} />
 				<CartProvider>
